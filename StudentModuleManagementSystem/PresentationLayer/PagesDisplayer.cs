@@ -9,12 +9,17 @@ namespace StudentModuleManagementSystem.PresentationLayer
         private readonly IOptionSelector _optionSelector;
         private readonly IStudentView _studentView;
         private readonly IModuleView _moduleView;
+        private readonly IStudentModuleView _studentModuleView;
 
-        public PagesDisplayer(IOptionSelector optionSelector, IStudentView studentView, IModuleView moduleView)
+        public PagesDisplayer(IOptionSelector optionSelector,
+                              IStudentView studentView,
+                              IModuleView moduleView,
+                              IStudentModuleView studentModuleView)
         {
             _optionSelector = optionSelector;
             _studentView = studentView;
             _moduleView = moduleView;
+            _studentModuleView = studentModuleView;
         }
 
         public void DisplayHomePage()
@@ -147,6 +152,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
                     break;
 
                 case "3":
+                    _studentModuleView.ViewStudentModule();
                     break;
 
                 case "4":

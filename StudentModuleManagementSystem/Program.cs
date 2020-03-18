@@ -38,6 +38,7 @@ namespace EventManager
             // repositories
             services.AddScoped<IStudentGenericRepository<Student>, StudentGenericRepository>();
             services.AddScoped<IGenericRepository<Module>, GenericRepository<Module>>();
+            services.AddScoped<IStudentModuleGenericRepository<StudentModule>, StudentModuleGenericRepository>();
 
             // services
             services.AddScoped<IStudentPresenter, StudentPresenter>();
@@ -46,6 +47,9 @@ namespace EventManager
             services.AddScoped<IPagesDisplayer, PagesDisplayer>();
             services.AddScoped<IModulePresenter, ModulePresenter>();
             services.AddScoped<IModuleView, ModuleView>();
+            services.AddScoped<IStudentModulePresenter, StudentModulePresenter>();
+            services.AddScoped<IStudentModuleView, StudentModuleView>();
+            services.AddScoped<IValidation, Validation>();
 
             // program
             services.AddScoped<Program>();
