@@ -23,6 +23,14 @@ namespace StudentModuleManagementSystem.BusinessLayer
             return selected;
         }
 
+
+        public void PressKey()
+        {
+            Console.WriteLine(Environment.NewLine + "Press enter/return key to go back to the first page...");
+            Console.ReadLine();
+        }
+
+
         public int SelectIntOption()
         {
 

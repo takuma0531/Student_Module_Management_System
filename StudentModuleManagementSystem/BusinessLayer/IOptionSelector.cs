@@ -5,6 +5,8 @@ namespace StudentModuleManagementSystem.BusinessLayer
 {
     public interface IOptionSelector
     {
+        void PressKey();
+
         string SelectStringOption();
 
         int SelectIntOption();

@@ -24,7 +24,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
 
         public void DisplayHomePage()
         {
-            Console.WriteLine("Hello! May I help you?" + Environment.NewLine);
+            Console.WriteLine(Environment.NewLine + "Hello! May I help you?" + Environment.NewLine);
             Console.WriteLine("Manage student data  : 1 {0}" +
                               "Manage module data   : 2 {0}" +
                               "Manage course status : 3 {0}" +
@@ -146,16 +146,19 @@ namespace StudentModuleManagementSystem.PresentationLayer
             switch (selected)
             {
                 case "1":
+                    _studentModuleView.AssignStudentToModule();
                     break;
 
                 case "2":
+          
                     break;
 
                 case "3":
-                    _studentModuleView.ViewStudentModule();
+                    _studentModuleView.ViewStudentModuleByStudentId();
                     break;
 
                 case "4":
+                    _studentModuleView.ViewStudentModuleByModuleId();
                     break;
 
                 case "0":
