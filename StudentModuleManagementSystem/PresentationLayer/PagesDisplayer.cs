@@ -8,11 +8,13 @@ namespace StudentModuleManagementSystem.PresentationLayer
     {
         private readonly IOptionSelector _optionSelector;
         private readonly IStudentView _studentView;
+        private readonly IModuleView _moduleView;
 
-        public PagesDisplayer(IOptionSelector optionSelector, IStudentView studentView)
+        public PagesDisplayer(IOptionSelector optionSelector, IStudentView studentView, IModuleView moduleView)
         {
             _optionSelector = optionSelector;
             _studentView = studentView;
+            _moduleView = moduleView;
         }
 
         public void DisplayHomePage()
@@ -20,7 +22,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
             Console.WriteLine("Hello! May I help you?" + Environment.NewLine);
             Console.WriteLine("Manage student data : 1 {0}" +
                               "Manage module data  : 2 {0}" +
-                              "Exit          : 0 {0}", Environment.NewLine);
+                              "Exit                : 0 {0}", Environment.NewLine);
 
             string selected = _optionSelector.SelectStringOption();
             switch (selected)
@@ -92,10 +94,10 @@ namespace StudentModuleManagementSystem.PresentationLayer
         {
             Console.WriteLine("########## You can select your action below. ##########" + Environment.NewLine);
             Console.WriteLine("Register new module data                                 : 1 {0}" +
-                              "Show all the module data                                 : 2 {0}" +
+                              "Show all the modules data                                : 2 {0}" +
                               "Show which students are assigned to the specified module : 3 {0}" +
-                              "Edit the specified data                                  : 4 {0}" +
-                              "Delete the specified data                                : 5 {0}" +
+                              "Edit the specified module data                           : 4 {0}" +
+                              "Delete the specified module data                         : 5 {0}" +
                               "Go back to the previous page                             : 0 {0}", Environment.NewLine);
 
             string selected = _optionSelector.SelectStringOption();
@@ -103,11 +105,11 @@ namespace StudentModuleManagementSystem.PresentationLayer
             switch (selected)
             {
                 case "1":
-                    // todo
+                    _moduleView.RegisterModule();
                     break;
 
                 case "2":
-                    // todo
+                    _moduleView.ViewModules();
                     break;
 
                 case "3":
@@ -115,7 +117,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
                     break;
 
                 case "4":
-                    // todo
+                    _moduleView.EditModule();
                     break;
 
                 case "5":

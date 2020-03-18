@@ -32,7 +32,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
             {
                 if (stringSelected == "")
                 {
-                    Console.WriteLine("Please enter the student id.");
+                    Console.WriteLine("Please enter the id.");
                     stringSelected = Console.ReadLine();
                 }
                 try
@@ -42,7 +42,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
                 }
                 catch
                 {
-                    Console.WriteLine("Please enter the student id.");
+                    Console.WriteLine("Please enter the id.");
                     stringSelected = Console.ReadLine();
                 }
             }

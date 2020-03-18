@@ -20,15 +20,18 @@ namespace StudentModuleManagementSystem.PresentationLayer
             _optionSelector = optionSelector;
         }
 
+
+        // show student each data
         public void ShowStudentEachData(Student student)
         {
-            Console.WriteLine($"*student Id: {student.StudentId}  " +
-                              $"First name: {student.FirstName}  " +
-                              $"Last name: {student.LastName}  " +
+            Console.WriteLine($"*Student Id: {student.StudentId}  " +
+                              $"First Name: {student.FirstName}  " +
+                              $"Last Name: {student.LastName}  " +
                               $"Faculty Number: {student.FacultyNumber}");
         }
 
-        // input student data
+
+        // input student first name
         public string InputStudentFirstName()
         {
             Console.WriteLine("Please type in first name of new student. ");
@@ -44,6 +47,8 @@ namespace StudentModuleManagementSystem.PresentationLayer
             return firstName;
         }
 
+
+        // input student last name
         public string InputStudentLastName()
         {
             Console.WriteLine("Please type in last name of new student.");
@@ -59,6 +64,8 @@ namespace StudentModuleManagementSystem.PresentationLayer
             return lastName;
         }
 
+
+        // input student faculty number
         public int InputStudentFacultyNumber()
         {
             Console.WriteLine("please type in the faculty number of new student.");
@@ -92,7 +99,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
             List<Student> students = _studentPresenter.GetStudents();
             if (students.Count == 0)
             {
-                Console.WriteLine(Environment.NewLine + "Sorry, no students data is not registered.");
+                Console.WriteLine(Environment.NewLine + "Sorry, no students data is registered.");
             }
             else
             {
@@ -123,12 +130,12 @@ namespace StudentModuleManagementSystem.PresentationLayer
         }
 
 
-        // register student 
+        // register new student 
         public void RegisterStudent()
         {
-            firstName = InputStudentFirstName();
-            lastName = InputStudentLastName();
-            facultyNumber = InputStudentFacultyNumber();
+            InputStudentFirstName();
+            InputStudentLastName();
+            InputStudentFacultyNumber();
 
             Student student = new Student()
             {
@@ -141,14 +148,14 @@ namespace StudentModuleManagementSystem.PresentationLayer
         }
 
 
-        // update
+        // update student data
         public void EditStudent()
         {
             Student student = _optionSelector.SelectWayOfChoosingStudent();
 
             if (student == null)
             {
-                Console.WriteLine("Sorry, the student data couldn't be found.");
+                Console.WriteLine(Environment.NewLine + "Sorry, the student data couldn't be found.");
             }
             else
             {
@@ -162,7 +169,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
 
                 _studentPresenter.EditStudent(student);
 
-                Console.WriteLine("Successfully updated.");
+                Console.WriteLine(Environment.NewLine + "Successfully updated.");
             }
         }
 
@@ -174,12 +181,12 @@ namespace StudentModuleManagementSystem.PresentationLayer
 
             if (student == null)
             {
-                Console.WriteLine("The student data doesn't exist.");
+                Console.WriteLine(Environment.NewLine + "The student data doesn't exist.");
             }
             else
             {
                 _studentPresenter.DeleteStudent(student.StudentId);
-                Console.WriteLine("Successfully deleted.");
+                Console.WriteLine(Environment.NewLine + "Successfully deleted.");
             }
         }
     }

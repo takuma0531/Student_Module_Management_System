@@ -37,19 +37,22 @@ namespace EventManager
 
             // repositories
             services.AddScoped<IStudentGenericRepository<Student>, StudentGenericRepository>();
+            services.AddScoped<IGenericRepository<Module>, GenericRepository<Module>>();
 
             // services
             services.AddScoped<IStudentPresenter, StudentPresenter>();
             services.AddScoped<IOptionSelector, OptionSelector>();
             services.AddScoped<IStudentView, StudentView>();
             services.AddScoped<IPagesDisplayer, PagesDisplayer>();
+            services.AddScoped<IModulePresenter, ModulePresenter>();
+            services.AddScoped<IModuleView, ModuleView>();
 
             // program
             services.AddScoped<Program>();
 
             // dbcontext
             services.AddDbContext<StudentModuleManagementDatabaseContext>(options => options
-                   .UseSqlServer("Server=localhost,1433;Database=StudentManagementDb;User=sa;Password=tellmewhatyouaredoingrightnow0225howistheweathertodayitissunnytodayhowaboutyou"));
+                   .UseSqlServer("Server=localhost,1433;Database=StudentModuleManagementDatabase;User=sa;Password=tellmewhatyouaredoingrightnow0225howistheweathertodayitissunnytodayhowaboutyou"));
 
             var serviceProvider = services.BuildServiceProvider();
 

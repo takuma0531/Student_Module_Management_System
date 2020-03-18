@@ -7,6 +7,8 @@ namespace StudentModuleManagementSystem.BusinessLayer
     {
         string SelectStringOption();
 
+        int SelectIntOption();
+
         Student SelectWayOfChoosingStudent();
     }
 }
