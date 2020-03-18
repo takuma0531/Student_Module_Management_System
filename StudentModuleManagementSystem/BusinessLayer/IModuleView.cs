@@ -1,5 +1,5 @@
 ﻿using System;
-namespace StudentModuleManagementSystem.PresentationLayer
+namespace StudentModuleManagementSystem.BusinessLayer
 {
     public interface IModuleView
     {

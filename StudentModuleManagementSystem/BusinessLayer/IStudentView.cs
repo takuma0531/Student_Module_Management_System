@@ -1,7 +1,6 @@
 ﻿using System;
-using StudentModuleManagementSystem.DataAccessLayer;
 
-namespace StudentModuleManagementSystem.PresentationLayer
+namespace StudentModuleManagementSystem.BusinessLayer
 {
     public interface IStudentView
     {

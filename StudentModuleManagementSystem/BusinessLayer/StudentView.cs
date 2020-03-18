@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using StudentModuleManagementSystem.BusinessLayer;
 using StudentModuleManagementSystem.DataAccessLayer;
 
-namespace StudentModuleManagementSystem.PresentationLayer
+namespace StudentModuleManagementSystem.BusinessLayer
 {
     public class StudentView : IStudentView
     {
