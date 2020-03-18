@@ -7,15 +7,19 @@ namespace StudentModuleManagementSystem.BusinessLayer
     public class StudentView : IStudentView
     {
         private readonly IStudentPresenter _studentPresenter;
+        private readonly IStudentModulePresenter _studentModulePresenter;
         private readonly IOptionSelector _optionSelector;
 
         string firstName;
         string lastName;
         int facultyNumber;
 
-        public StudentView(IStudentPresenter studentPresenter, IOptionSelector optionSelector)
+        public StudentView(IStudentPresenter studentPresenter,
+                           IStudentModulePresenter studentModulePresenter,
+                           IOptionSelector optionSelector)
         {
             _studentPresenter = studentPresenter;
+            _studentModulePresenter = studentModulePresenter;
             _optionSelector = optionSelector;
         }
 
@@ -184,9 +188,20 @@ namespace StudentModuleManagementSystem.BusinessLayer
             }
             else
             {
-                _studentPresenter.DeleteStudent(student.StudentId);
-                Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+                List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByStudentId(student.StudentId);
+                if (studentModules.Count == 0)
+                {
+                    _studentPresenter.DeleteStudent(student.StudentId);
+                    Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+                }
+                else
+                {
+                    Console.WriteLine("The student still has some modules. Please unaasign the student to all the modules, so you can delete the data.");
+                }
             }
+                
+    
+
         }
     }
 }

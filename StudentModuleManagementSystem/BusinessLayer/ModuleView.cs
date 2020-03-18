@@ -96,7 +96,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
         // delete module data
         public void DeleteModule()
         {
-            Console.WriteLine("Please type in the module id to edit.");
+            Console.WriteLine("Please type in the module id to delete.");
             int selected = _optionSelector.SelectIntOption();
             Module module = _modulePresenter.GetModuleById(selected);
 
