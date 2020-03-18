@@ -103,7 +103,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
             else
             {
                 Console.WriteLine("All the students data is below." + Environment.NewLine);
-                Console.WriteLine("*[All Students Info]*" + Environment.NewLine);
+                Console.WriteLine("[All Students Info]" + Environment.NewLine);
                 foreach (Student student in students)
                 {
                     ShowStudentEachData(student);
@@ -118,7 +118,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
             Student student = _optionSelector.SelectWayOfChoosingStudent();
             if (student != null)
             {
-                Console.WriteLine("*[Student Info]*" + Environment.NewLine);
+                Console.WriteLine("[Student Info]" + Environment.NewLine);
                 ShowStudentEachData(student);
             }
             else

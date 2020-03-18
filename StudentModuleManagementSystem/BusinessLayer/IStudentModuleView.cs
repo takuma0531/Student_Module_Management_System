@@ -9,6 +9,6 @@ namespace StudentModuleManagementSystem.BusinessLayer
 
         void AssignStudentToModule();
 
-        void DeleteStudentModuleOnePair();
+        void UnassignStudentToModule();
     }
 }

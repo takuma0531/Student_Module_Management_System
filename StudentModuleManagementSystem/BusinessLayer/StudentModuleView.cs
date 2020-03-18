@@ -149,16 +149,48 @@ namespace StudentModuleManagementSystem.BusinessLayer
             }
             else
             {
-                Console.WriteLine("Sorry, the student or the module couldn't be found.");
+                Console.WriteLine("Sorry, the student data or the module data couldn't be found.");
                 _optionSelector.PressKey();
             }
         }
 
 
         // get student id and module id to delete student module row
-        public void DeleteStudentModuleOnePair()
+        public void UnassignStudentToModule()
         {
+            Console.WriteLine("Please type in student id to unassign the student to a module.");
             int studentId = _optionSelector.SelectIntOption();
+            Student student = _studentPresenter.GetStudentById(studentId);
+
+            Console.WriteLine("Please type in module id to unassign the student to the module.");
+            int moduleId = _optionSelector.SelectIntOption();
+            Module module = _modulePresenter.GetModuleById(moduleId);
+
+            if (student != null && module != null)
+            {
+                List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
+
+                foreach (StudentModule studentModule in studentModules)
+                {
+                    if (studentModule.StudentId == studentId && studentModule.ModuleId == moduleId)
+                    {
+                        _studentModulePresenter.DeleteStudentModule(studentId);
+
+                        Console.WriteLine("Successfully unassigned.");
+                        _optionSelector.PressKey();
+                    }
+                    else if (studentModule.StudentId != studentId && studentModule.ModuleId != moduleId)
+                    {
+                        Console.WriteLine("The student doesn't take the module.");
+                        _optionSelector.PressKey();
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Sorry, the student data or the module data couldn't be found.");
+                _optionSelector.PressKey();
+            }
 
         }
     }

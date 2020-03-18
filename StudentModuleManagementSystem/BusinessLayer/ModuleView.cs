@@ -46,7 +46,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
             else
             {
                 Console.WriteLine("All the modules data is below." + Environment.NewLine);
-                Console.WriteLine("*[All Modules Info]*" + Environment.NewLine);
+                Console.WriteLine("[All Modules Info]" + Environment.NewLine);
                 foreach (Module module in modules)
                 {
                     Console.WriteLine($"*Module Id: {module.ModuleId}  " +

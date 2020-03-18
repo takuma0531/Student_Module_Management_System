@@ -150,7 +150,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
                     break;
 
                 case "2":
-          
+                    _studentModuleView.UnassignStudentToModule();
                     break;
 
                 case "3":
