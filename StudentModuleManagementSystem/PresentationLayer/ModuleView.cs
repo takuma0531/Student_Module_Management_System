@@ -92,6 +92,25 @@ namespace StudentModuleManagementSystem.PresentationLayer
             }
         }
 
+
         // delete module data
+        public void DeleteModule()
+        {
+            Console.WriteLine("Please type in the module id to edit.");
+            int selected = _optionSelector.SelectIntOption();
+            Module module = _modulePresenter.GetModuleById(selected);
+
+            if (module == null)
+            {
+                Console.WriteLine(Environment.NewLine + "The module data doesn't exist.");
+            }
+            else
+            {
+                int id = module.ModuleId;
+                _modulePresenter.DeleteModule(id);
+
+                Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+            }
+        }
     }
 }

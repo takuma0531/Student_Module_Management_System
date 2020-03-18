@@ -121,7 +121,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
                     break;
 
                 case "5":
-                    // todo
+                    _moduleView.DeleteModule();
                     break;
 
                 case "0":

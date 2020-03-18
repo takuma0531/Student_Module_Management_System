@@ -10,5 +10,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
         void RegisterModule();
 
         void EditModule();
+
+        void DeleteModule();
     }
 }
