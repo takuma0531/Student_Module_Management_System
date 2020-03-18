@@ -6,5 +6,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
         void DisplayHomePage();
 
         void DisplayStudentPage();
+
+        void DisplayModulePage();
     }
 }
