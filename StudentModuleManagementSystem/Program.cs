@@ -49,7 +49,6 @@ namespace EventManager
             services.AddScoped<IModuleView, ModuleView>();
             services.AddScoped<IStudentModulePresenter, StudentModulePresenter>();
             services.AddScoped<IStudentModuleView, StudentModuleView>();
-            services.AddScoped<IValidation, Validation>();
 
             // program
             services.AddScoped<Program>();

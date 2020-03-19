@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using StudentModuleManagementSystem.DataAccessLayer;
 
 namespace StudentModuleManagementSystem.BusinessLayer
@@ -7,7 +8,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
     {
         void ShowStudentEachData(Student student);
 
-        void ViewStudents();
+        List<Student> ViewStudents();
 
         void ViewStudent();
 

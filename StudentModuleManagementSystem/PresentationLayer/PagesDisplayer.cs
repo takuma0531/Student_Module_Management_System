@@ -24,7 +24,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
 
         public void DisplayHomePage()
         {
-            Console.WriteLine(Environment.NewLine + "Hello! May I help you?" + Environment.NewLine);
+            Console.WriteLine(Environment.NewLine + "[Home Page] Hello! May I help you?" + Environment.NewLine);
             Console.WriteLine("Manage student data  : 1 {0}" +
                               "Manage module data   : 2 {0}" +
                               "Manage course status : 3 {0}" +
@@ -68,7 +68,6 @@ namespace StudentModuleManagementSystem.PresentationLayer
             {
                 case "1":
                     _studentView.RegisterStudent();
-                    Console.WriteLine("Successfully registered.");
                     break;
 
                 case "2":
@@ -91,8 +90,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
                     break;
             }
 
-            Console.Write(Environment.NewLine + "Press enter/return key to continue..." + Environment.NewLine);
-            Console.ReadLine();
+            _optionSelector.PressKey();
         }
 
         public void DisplayModulePage()
@@ -128,8 +126,7 @@ namespace StudentModuleManagementSystem.PresentationLayer
                     break;
             }
 
-            Console.Write(Environment.NewLine + "Press enter/return key to continue..." + Environment.NewLine);
-            Console.ReadLine();
+            _optionSelector.PressKey();
         }
 
         public void DisplayCourseStatusPage()
@@ -164,6 +161,8 @@ namespace StudentModuleManagementSystem.PresentationLayer
                 case "0":
                     break;
             }
+
+            _optionSelector.PressKey();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
             Console.WriteLine($"*Student Id: {student.StudentId}  " +
                               $"First Name: {student.FirstName}  " +
                               $"Last Name: {student.LastName}  " +
-                              $"Faculty Number: {student.FacultyNumber}");
+                              $"Faculty Number: {student.FacultyNumber}" + Environment.NewLine);
         }
 
 
@@ -97,12 +97,12 @@ namespace StudentModuleManagementSystem.BusinessLayer
 
 
         // show all the students data
-        public void ViewStudents()
+        public List<Student> ViewStudents()
         {
             List<Student> students = _studentPresenter.GetStudents();
             if (students.Count == 0)
             {
-                Console.WriteLine(Environment.NewLine + "Sorry, no students data is registered.");
+                Console.WriteLine(Environment.NewLine + "Sorry, any student data is not registered.");
             }
             else
             {
@@ -113,6 +113,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
                     ShowStudentEachData(student);
                 }
             }
+            return students;
         }
 
 
@@ -148,60 +149,72 @@ namespace StudentModuleManagementSystem.BusinessLayer
             };
 
             _studentPresenter.RegisterStudent(student);
+            Console.WriteLine("Successfully registered.");
         }
 
 
         // update student data
         public void EditStudent()
         {
-            Student student = _optionSelector.SelectWayOfChoosingStudent();
+            List<Student> students = ViewStudents();
 
-            if (student == null)
+            if (students.Count != 0)
             {
-                Console.WriteLine(Environment.NewLine + "Sorry, the student data couldn't be found.");
+                Student student = _optionSelector.SelectWayOfChoosingStudent();
+
+                if (student == null)
+                {
+                    Console.WriteLine(Environment.NewLine + "Sorry, the student data couldn't be found.");
+                }
+                else
+                {
+                    firstName = InputStudentFirstName();
+                    lastName = InputStudentLastName();
+                    facultyNumber = InputStudentFacultyNumber();
+
+                    student.FirstName = firstName;
+                    student.LastName = lastName;
+                    student.FacultyNumber = facultyNumber;
+
+                    _studentPresenter.EditStudent(student);
+
+                    Console.WriteLine(Environment.NewLine + "Successfully updated.");
+                }
             }
-            else
-            {
-                firstName = InputStudentFirstName();
-                lastName = InputStudentLastName();
-                facultyNumber = InputStudentFacultyNumber();
+            else { }
 
-                student.FirstName = firstName;
-                student.LastName = lastName;
-                student.FacultyNumber = facultyNumber;
 
-                _studentPresenter.EditStudent(student);
-
-                Console.WriteLine(Environment.NewLine + "Successfully updated.");
-            }
         }
 
 
         // delete
         public void DeleteStudent()
         {
-            Student student = _optionSelector.SelectWayOfChoosingStudent();
+            List<Student> students = ViewStudents();
 
-            if (student == null)
+            if (students.Count != 0)
             {
-                Console.WriteLine(Environment.NewLine + "The student data doesn't exist.");
-            }
-            else
-            {
-                List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByStudentId(student.StudentId);
-                if (studentModules.Count == 0)
+                Student student = _optionSelector.SelectWayOfChoosingStudent();
+
+                if (student == null)
                 {
-                    _studentPresenter.DeleteStudent(student.StudentId);
-                    Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+                    Console.WriteLine(Environment.NewLine + "The student data doesn't exist.");
                 }
                 else
                 {
-                    Console.WriteLine("The student still has some modules. Please unaasign the student to all the modules, so you can delete the data.");
+                    List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByStudentId(student.StudentId);
+                    if (studentModules.Count == 0)
+                    {
+                        _studentPresenter.DeleteStudent(student.StudentId);
+                        Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("The student still has some modules. Please unaasign the student to all the modules, so you can delete the data.");
+                    }
                 }
             }
-                
-    
-
+            else { }
         }
     }
 }

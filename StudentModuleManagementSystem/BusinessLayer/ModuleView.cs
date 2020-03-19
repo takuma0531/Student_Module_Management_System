@@ -36,12 +36,12 @@ namespace StudentModuleManagementSystem.BusinessLayer
 
 
         // show all the modules data
-        public void ViewModules()
+        public List<Module> ViewModules()
         {
             List<Module> modules = _modulePresenter.GetModules();
             if (modules.Count == 0)
             {
-                Console.WriteLine(Environment.NewLine + "Sorry, no module data is registered.");
+                Console.WriteLine(Environment.NewLine + "Sorry, any module data is not registered.");
             }
             else
             {
@@ -50,9 +50,10 @@ namespace StudentModuleManagementSystem.BusinessLayer
                 foreach (Module module in modules)
                 {
                     Console.WriteLine($"*Module Id: {module.ModuleId}  " +
-                                      $"Module Name: {module.ModuleName}");
+                                      $"Module Name: {module.ModuleName}" + Environment.NewLine);
                 }
             }
+            return modules;
         }
 
 
@@ -75,42 +76,54 @@ namespace StudentModuleManagementSystem.BusinessLayer
         // update module data
         public void EditModule()
         {
-            Console.WriteLine("Please type in the module id to edit.");
-            int selected = _optionSelector.SelectIntOption();
-            Module module = _modulePresenter.GetModuleById(selected);
+            List<Module> modules = ViewModules();
 
-            if (module == null)
+            if (modules.Count != 0)
             {
-                Console.WriteLine(Environment.NewLine + "Sorry, the module data couldn't be found.");
-            }
-            else
-            {
-                module.ModuleName = InputModuleName();
-                _modulePresenter.EditModule(module);
+                Console.WriteLine("Please type in the module id to edit.");
+                int selected = _optionSelector.SelectIntOption();
+                Module module = _modulePresenter.GetModuleById(selected);
 
-                Console.WriteLine(Environment.NewLine + "Successfully updated.");
+                if (module == null)
+                {
+                    Console.WriteLine(Environment.NewLine + "Sorry, the module data couldn't be found.");
+                }
+                else
+                {
+                    module.ModuleName = InputModuleName();
+                    _modulePresenter.EditModule(module);
+
+                    Console.WriteLine(Environment.NewLine + "Successfully updated.");
+                }
             }
+            else { }
         }
 
 
         // delete module data
         public void DeleteModule()
         {
-            Console.WriteLine("Please type in the module id to delete.");
-            int selected = _optionSelector.SelectIntOption();
-            Module module = _modulePresenter.GetModuleById(selected);
+            List<Module> modules = ViewModules();
 
-            if (module == null)
+            if (modules.Count != 0)
             {
-                Console.WriteLine(Environment.NewLine + "The module data doesn't exist.");
-            }
-            else
-            {
-                int id = module.ModuleId;
-                _modulePresenter.DeleteModule(id);
+                Console.WriteLine("Please type in the module id to delete.");
+                int selected = _optionSelector.SelectIntOption();
+                Module module = _modulePresenter.GetModuleById(selected);
 
-                Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+                if (module == null)
+                {
+                    Console.WriteLine(Environment.NewLine + "The module data doesn't exist.");
+                }
+                else
+                {
+                    int id = module.ModuleId;
+                    _modulePresenter.DeleteModule(id);
+
+                    Console.WriteLine(Environment.NewLine + "Successfully deleted.");
+                }
             }
+            else { }
         }
     }
 }

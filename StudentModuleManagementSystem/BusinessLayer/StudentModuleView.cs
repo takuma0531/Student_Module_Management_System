@@ -7,25 +7,26 @@ namespace StudentModuleManagementSystem.BusinessLayer
     public class StudentModuleView : IStudentModuleView
     {
         private readonly IStudentModulePresenter _studentModulePresenter;
-        private readonly IOptionSelector _optionSelector;
-        private readonly IStudentView _studentView;
-        private readonly IValidation _validation;
         private readonly IStudentPresenter _studentPresenter;
         private readonly IModulePresenter _modulePresenter;
-
+        private readonly IOptionSelector _optionSelector;
+        private readonly IStudentView _studentView;
+        private readonly IModuleView _moduleView;
+        
+     
         public StudentModuleView(IStudentModulePresenter studentModulePresenter,
                                  IStudentPresenter studentPresenter,
                                  IModulePresenter modulePresenter,
                                  IOptionSelector optionSelector,
                                  IStudentView studentView,
-                                 IValidation validation)
+                                 IModuleView moduleView)
         {
             _studentModulePresenter = studentModulePresenter;
             _studentPresenter = studentPresenter;
             _modulePresenter = modulePresenter;
             _optionSelector = optionSelector;
             _studentView = studentView;
-            _validation = validation;
+            _moduleView = moduleView;
             
         }
 
@@ -33,165 +34,186 @@ namespace StudentModuleManagementSystem.BusinessLayer
         // show which modules student takes by selecting student id
         public void ViewStudentModuleByStudentId()
         {
-            Console.WriteLine("Please type in the student id to check which modules he/she takes.");
-            int studentId = _optionSelector.SelectIntOption();
-            Student student = _studentPresenter.GetStudentById(studentId);
-            List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByStudentId(studentId);
+            List<Student> students = _studentView.ViewStudents();
+            Console.WriteLine(Environment.NewLine);
 
-            if (student != null)
+            if (students.Count != 0)
             {
-                if (studentModules.Count != 0)
+                Console.WriteLine("Please type in the student id to check which modules he/she takes.");
+                int studentId = _optionSelector.SelectIntOption();
+                Student student = _studentPresenter.GetStudentById(studentId);
+                List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByStudentId(studentId);
+
+                if (student != null)
                 {
-                    bool once = true;
-                    foreach (StudentModule studentModule in studentModules)
+                    if (studentModules.Count != 0)
                     {
-                        if (once)
+                        bool once = true;
+                        foreach (StudentModule studentModule in studentModules)
                         {
-                            Console.WriteLine("[Student Info]" + Environment.NewLine);
-                            _studentView.ShowStudentEachData(studentModule.Student);
-                            Console.WriteLine(Environment.NewLine + "[Module Info of the student's]");
-                            once = false;
+                            if (once)
+                            {
+                                Console.WriteLine("[Student Info]" + Environment.NewLine);
+                                _studentView.ShowStudentEachData(studentModule.Student);
+                                Console.WriteLine(Environment.NewLine + "[Module Info of the student's]");
+                                once = false;
+                            }
+
+                            Console.WriteLine($"Module Id: {studentModule.Module.ModuleId}  Module Name: {studentModule.Module.ModuleName}");
                         }
-
-                        Console.WriteLine($"Module Id: {studentModule.Module.ModuleId}  Module Name: {studentModule.Module.ModuleName}");
                     }
-                }
 
+                    else
+                    {
+                        Console.WriteLine("The student doesn't take any module so far.");
+                    }
+
+                }
                 else
                 {
-                    Console.WriteLine("The student doesn't take any module so far.");
-                    _optionSelector.PressKey();
+                    Console.WriteLine("Sorry, the student data couldn't be found.");
                 }
-
             }
-            else
-            {
-                Console.WriteLine("Sorry, the student data couldn't be found.");
-                _optionSelector.PressKey();
-            }
-
-
+            else { }
         }
+
 
         // show which students are assigned to the module by selecting module id
         public void ViewStudentModuleByModuleId()
         {
-            Console.WriteLine("Please type in the module id to check which students are assigned to the module.");
-            int moduleId = _optionSelector.SelectIntOption();
-            Module module = _modulePresenter.GetModuleById(moduleId);
-            List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
+            List<Module> modules = _moduleView.ViewModules();
+            Console.WriteLine(Environment.NewLine);
 
-            if (module != null)
+            if (modules.Count != 0)
             {
-                if (studentModules.Count != 0)
+                Console.WriteLine("Please type in the module id to check which students are assigned to the module.");
+                int moduleId = _optionSelector.SelectIntOption();
+                Module module = _modulePresenter.GetModuleById(moduleId);
+                List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
+                if (module != null)
                 {
-                    bool once = true;
-                    foreach (StudentModule studentModule in studentModules)
+                    if (studentModules.Count != 0)
                     {
-                        if (once)
+                        bool once = true;
+                        foreach (StudentModule studentModule in studentModules)
                         {
-                            Console.WriteLine("[Module Info]" + Environment.NewLine);
-                             Console.WriteLine($"Module Id: {studentModule.Module.ModuleId}  Module Name: {studentModule.Module.ModuleName}");
-                            Console.WriteLine(Environment.NewLine + "[Student Info of the module]");
-                            once = false;
-                        }
+                            if (once)
+                            {
+                                Console.WriteLine("[Module Info]" + Environment.NewLine);
+                                Console.WriteLine($"Module Id: {studentModule.Module.ModuleId}  Module Name: {studentModule.Module.ModuleName}");
+                                Console.WriteLine(Environment.NewLine + "[Student Info of the module]");
+                                once = false;
+                            }
 
-                        _studentView.ShowStudentEachData(studentModule.Student);
+                            _studentView.ShowStudentEachData(studentModule.Student);
+                        }
                     }
+                    else
+                    {
+                        Console.WriteLine("The module is not assigned to any students so far.");
+                    }
+
                 }
                 else
                 {
-                    Console.WriteLine("The module is not assigned to any students so far.");
-                    _optionSelector.PressKey();
+                    Console.WriteLine("Sorry, the module data couldn't be found.");
                 }
-
             }
-            else
-            {
-                Console.WriteLine("Sorry, the module data couldn't be found.");
-                _optionSelector.PressKey();
-            }
+            else { }
         }
 
 
         // assign student to module
         public void AssignStudentToModule()
         {
-            Console.WriteLine("Please type in student id to assign the student to a module.");
-            int studentId = _optionSelector.SelectIntOption();
-            Student student = _studentPresenter.GetStudentById(studentId);
+            List<Student> students = _studentView.ViewStudents();
+            Console.WriteLine(Environment.NewLine);
+            List<Module> modules = _moduleView.ViewModules();
+            Console.WriteLine(Environment.NewLine);
 
-            Console.WriteLine("Please type in module id to assign the student to the module.");
-            int moduleId = _optionSelector.SelectIntOption();
-            Module module = _modulePresenter.GetModuleById(moduleId);
-
-            if (student != null && module != null)
+            if (students.Count != 0 && modules.Count != 0)
             {
-                if (student.StudentId != studentId && module.ModuleId != moduleId)
+                Console.WriteLine("Please type in student id to assign the student to a module.");
+                int studentId = _optionSelector.SelectIntOption();
+                Student student = _studentPresenter.GetStudentById(studentId);
+
+                Console.WriteLine("Please type in module id to assign the student to the module.");
+                int moduleId = _optionSelector.SelectIntOption();
+                Module module = _modulePresenter.GetModuleById(moduleId);
+
+                if (student != null && module != null)
                 {
-                    StudentModule studentModule = new StudentModule()
+                    StudentModule studentModule = new StudentModule();
+
+                    if (studentModule.StudentId != studentId && studentModule.ModuleId != moduleId)
                     {
-                        StudentId = student.StudentId,
-                        ModuleId = module.ModuleId
-                    };
+                        studentModule.StudentId = student.StudentId;
+                        studentModule.ModuleId = module.ModuleId;
 
-                    _studentModulePresenter.RegisterStudentModule(studentModule);
+                        _studentModulePresenter.RegisterStudentModule(studentModule);
 
-                    Console.WriteLine("Successfully assigned.");
-                    _optionSelector.PressKey();
+                        Console.WriteLine("Successfully assigned.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("The student has already taken the module.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("The student has already taken the module.");
-                    _optionSelector.PressKey();
+                    Console.WriteLine("Sorry, the student data or the module data couldn't be found.");
                 }
-        
             }
-            else
-            {
-                Console.WriteLine("Sorry, the student data or the module data couldn't be found.");
-                _optionSelector.PressKey();
-            }
+            else if (students.Count == 0) { }
+            else if (modules.Count == 0) { }
+            else { }
         }
 
 
         // get student id and module id to delete student module row
         public void UnassignStudentToModule()
         {
-            Console.WriteLine("Please type in student id to unassign the student to a module.");
-            int studentId = _optionSelector.SelectIntOption();
-            Student student = _studentPresenter.GetStudentById(studentId);
+            List<Student> students = _studentView.ViewStudents();
+            Console.WriteLine(Environment.NewLine);
+            List<Module> modules = _moduleView.ViewModules();
+            Console.WriteLine(Environment.NewLine);
 
-            Console.WriteLine("Please type in module id to unassign the student to the module.");
-            int moduleId = _optionSelector.SelectIntOption();
-            Module module = _modulePresenter.GetModuleById(moduleId);
-
-            if (student != null && module != null)
+            if (students.Count != 0 && modules.Count != 0)
             {
-                List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
+                Console.WriteLine("Please type in student id to unassign the student to a module.");
+                int studentId = _optionSelector.SelectIntOption();
+                Student student = _studentPresenter.GetStudentById(studentId);
 
-                foreach (StudentModule studentModule in studentModules)
+                Console.WriteLine("Please type in module id to unassign the student to the module.");
+                int moduleId = _optionSelector.SelectIntOption();
+                Module module = _modulePresenter.GetModuleById(moduleId);
+
+                if (student != null && module != null)
                 {
-                    if (studentModule.StudentId == studentId && studentModule.ModuleId == moduleId)
-                    {
-                        _studentModulePresenter.DeleteStudentModule(studentId);
+                    List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
 
-                        Console.WriteLine("Successfully unassigned.");
-                        _optionSelector.PressKey();
-                    }
-                    else if (studentModule.StudentId != studentId && studentModule.ModuleId != moduleId)
+                    foreach (StudentModule studentModule in studentModules)
                     {
-                        Console.WriteLine("The student doesn't take the module.");
-                        _optionSelector.PressKey();
+                        if (studentModule.StudentId == studentId && studentModule.ModuleId == moduleId)
+                        {
+                            _studentModulePresenter.DeleteStudentModule(studentId);
+
+                            Console.WriteLine("Successfully unassigned.");
+                        }
+                        else if (studentModule.StudentId != studentId && studentModule.ModuleId != moduleId)
+                        {
+                            Console.WriteLine("The student doesn't take the module.");
+                        }
                     }
                 }
+                else
+                {
+                    Console.WriteLine("Sorry, the student data or the module data couldn't be found.");
+                }
             }
-            else
-            {
-                Console.WriteLine("Sorry, the student data or the module data couldn't be found.");
-                _optionSelector.PressKey();
-            }
-
+            else if (students.Count == 0) { }
+            else if (modules.Count == 0) { }
+            else { }
         }
     }
 }
