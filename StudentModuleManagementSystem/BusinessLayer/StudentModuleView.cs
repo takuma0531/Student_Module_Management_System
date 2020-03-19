@@ -143,21 +143,28 @@ namespace StudentModuleManagementSystem.BusinessLayer
 
                 if (student != null && module != null)
                 {
-                    StudentModule studentModule = new StudentModule();
+                    
+                    StudentModule newStudentModule = new StudentModule();
 
-                    if (studentModule.StudentId != studentId && studentModule.ModuleId != moduleId)
+                    List<StudentModule> existingStudentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
+                    foreach (StudentModule existingStudentModule in existingStudentModules)
                     {
-                        studentModule.StudentId = student.StudentId;
-                        studentModule.ModuleId = module.ModuleId;
+                        if (existingStudentModule.StudentId != studentId && existingStudentModule.ModuleId != moduleId)
+                        {
+                            newStudentModule.StudentId = student.StudentId;
+                            newStudentModule.ModuleId = module.ModuleId;
 
-                        _studentModulePresenter.RegisterStudentModule(studentModule);
+                            _studentModulePresenter.RegisterStudentModule(newStudentModule);
 
-                        Console.WriteLine("Successfully assigned.");
+                            Console.WriteLine("Successfully assigned.");
+                        }
+                        else if (existingStudentModule.StudentId == studentId && existingStudentModule.ModuleId == moduleId)
+                        {
+                            Console.WriteLine("The student has already taken the module.");
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine("The student has already taken the module.");
-                    }
+                 
+
                 }
                 else
                 {
