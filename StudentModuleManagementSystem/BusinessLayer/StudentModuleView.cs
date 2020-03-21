@@ -147,21 +147,34 @@ namespace StudentModuleManagementSystem.BusinessLayer
                     StudentModule newStudentModule = new StudentModule();
 
                     List<StudentModule> existingStudentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
-                    foreach (StudentModule existingStudentModule in existingStudentModules)
+
+                    if (existingStudentModules.Count != 0)
                     {
-                        if (existingStudentModule.StudentId != studentId && existingStudentModule.ModuleId != moduleId)
+                        foreach (StudentModule existingStudentModule in existingStudentModules)
                         {
-                            newStudentModule.StudentId = student.StudentId;
-                            newStudentModule.ModuleId = module.ModuleId;
+                            if (existingStudentModule.StudentId != studentId && existingStudentModule.ModuleId != moduleId)
+                            {
+                                newStudentModule.StudentId = student.StudentId;
+                                newStudentModule.ModuleId = module.ModuleId;
 
-                            _studentModulePresenter.RegisterStudentModule(newStudentModule);
+                                _studentModulePresenter.RegisterStudentModule(newStudentModule);
 
-                            Console.WriteLine("Successfully assigned.");
+                                Console.WriteLine("Successfully assigned.");
+                            }
+                            else if (existingStudentModule.StudentId == studentId && existingStudentModule.ModuleId == moduleId)
+                            {
+                                Console.WriteLine("The student has already taken the module.");
+                            }
                         }
-                        else if (existingStudentModule.StudentId == studentId && existingStudentModule.ModuleId == moduleId)
-                        {
-                            Console.WriteLine("The student has already taken the module.");
-                        }
+                    }
+                    else
+                    {
+                        newStudentModule.StudentId = student.StudentId;
+                        newStudentModule.ModuleId = module.ModuleId;
+
+                        _studentModulePresenter.RegisterStudentModule(newStudentModule);
+
+                        Console.WriteLine("Successfully assigned.");
                     }
                  
 
@@ -199,19 +212,27 @@ namespace StudentModuleManagementSystem.BusinessLayer
                 {
                     List<StudentModule> studentModules = _studentModulePresenter.GetStudentModuleByModuleId(moduleId);
 
-                    foreach (StudentModule studentModule in studentModules)
+                    if (studentModules.Count != 0)
                     {
-                        if (studentModule.StudentId == studentId && studentModule.ModuleId == moduleId)
+                        foreach (StudentModule studentModule in studentModules)
                         {
-                            _studentModulePresenter.DeleteStudentModule(studentId);
+                            if (studentModule.StudentId == studentId && studentModule.ModuleId == moduleId)
+                            {
+                                _studentModulePresenter.DeleteStudentModule(studentId);
 
-                            Console.WriteLine("Successfully unassigned.");
-                        }
-                        else if (studentModule.StudentId != studentId && studentModule.ModuleId != moduleId)
-                        {
-                            Console.WriteLine("The student doesn't take the module.");
+                                Console.WriteLine("Successfully unassigned.");
+                            }
+                            else if (studentModule.StudentId != student.StudentId || studentModule.ModuleId != module.ModuleId)
+                            {
+                                Console.WriteLine("The student doesn't take the module.");
+                            }
                         }
                     }
+                    else
+                    {
+                        Console.WriteLine("The student doesn't take the module.");
+                    }
+
                 }
                 else
                 {

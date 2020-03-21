@@ -39,6 +39,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
         {
             Console.WriteLine("Please type in first name of new student. ");
             firstName = Console.ReadLine();
+
             while (firstName == "")
             {
                 if (firstName == "")
@@ -46,6 +47,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
                     Console.WriteLine("Please enter the first name.");
                     firstName = Console.ReadLine();
                 }
+                
             }
             return firstName;
         }
@@ -141,14 +143,14 @@ namespace StudentModuleManagementSystem.BusinessLayer
             InputStudentLastName();
             InputStudentFacultyNumber();
 
-            Student student = new Student()
+            Student newStudent = new Student()
             {
                 FirstName = firstName,
                 LastName = lastName,
                 FacultyNumber = facultyNumber
             };
 
-            _studentPresenter.RegisterStudent(student);
+            _studentPresenter.RegisterStudent(newStudent);
             Console.WriteLine("Successfully registered.");
         }
 

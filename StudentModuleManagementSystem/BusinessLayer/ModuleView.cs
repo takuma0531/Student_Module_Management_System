@@ -10,6 +10,7 @@ namespace StudentModuleManagementSystem.BusinessLayer
         private readonly IOptionSelector _optionSelector;
 
         string moduleName;
+        bool sameModule;
 
         public ModuleView(IModulePresenter modulePresenter, IOptionSelector optionSelector)
         {
@@ -58,18 +59,42 @@ namespace StudentModuleManagementSystem.BusinessLayer
 
 
         // register new module
-        public void RegisterModule()
+        public bool FilterSameModule()
         {
             InputModuleName();
 
-            Module module = new Module()
+            List<Module> existingModules = _modulePresenter.GetModules();
+
+            foreach (Module existingModule in existingModules)
             {
-                ModuleName = moduleName
-            };
+                if (existingModule.ModuleName == moduleName)
+                {
+                    return sameModule = true;
+                }
+            }
+            return false;
+            
+        }
 
-            _modulePresenter.RegisterModule(module);
+        public void RegisterModule()
+        {
+            sameModule = FilterSameModule();
 
-            Console.WriteLine(Environment.NewLine + "Successfully registered.");
+            if (sameModule == false)
+            {
+                Module newModule = new Module()
+                {
+                    ModuleName = moduleName
+                };
+
+                _modulePresenter.RegisterModule(newModule);
+
+                Console.WriteLine(Environment.NewLine + "Successfully registered.");
+            }
+            else
+            {
+                Console.WriteLine(Environment.NewLine + "Please register another module name. The module name has already existed.");
+            }
         }
 
 
